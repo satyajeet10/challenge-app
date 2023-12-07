@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTodo } from '../../redux/slices/todosSlice';
 import { Form, Button } from 'react-bootstrap';
 
 const TodoForm = () => {
   const dispatch = useDispatch();
+  const { todos = [], formData = {} } = useSelector((state) => state);
+  const { selectedTaskId = '' } = formData;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('pending');
+  console.log(todos, '<=======', selectedTaskId);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +24,7 @@ const TodoForm = () => {
     // Dispatch action to add todo
     dispatch(
       addTodo({
+        id: todos.length + 1,
         title,
         description,
         status,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTodo } from '../../redux/slices/todosSlice';
+import { setSelectedTaskId } from '../../redux/slices/formSlice';
 import { Table, Button } from 'react-bootstrap';
 
 const TodoTable = () => {
@@ -9,6 +10,10 @@ const TodoTable = () => {
 
   const handleDelete = (id) => {
     dispatch(deleteTodo(id));
+  };
+
+  const handleEdit = (id) => {
+    dispatch(setSelectedTaskId(id));
   };
 
   return (
@@ -30,6 +35,9 @@ const TodoTable = () => {
             <td>{todo.status}</td>
             <td>{todo.createdAt}</td>
             <td>
+              <Button variant='primary' onClick={() => handleEdit(todo.id)}>
+                Edit
+              </Button>
               <Button variant='danger' onClick={() => handleDelete(todo.id)}>
                 Delete
               </Button>
